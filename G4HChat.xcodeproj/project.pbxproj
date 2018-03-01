@@ -10,17 +10,21 @@
 		1501B631202352A000872B8E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1501B630202352A000872B8E /* DataModel.swift */; };
 		1501B6332023544100872B8E /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1501B6322023544100872B8E /* ChatVC.swift */; };
 		1501B6352023545500872B8E /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1501B6342023545500872B8E /* Chat.storyboard */; };
+		1506DCE6204838AC008C4336 /* AccModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1506DCE5204838AC008C4336 /* AccModel.swift */; };
 		150C1423203DABA90041D594 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C1422203DABA90041D594 /* AVFoundation.framework */; };
 		150C4F9B201E216E00244664 /* TextMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C4F99201E216E00244664 /* TextMsgCell.swift */; };
 		150C4F9C201E216E00244664 /* TextMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150C4F9A201E216E00244664 /* TextMsgCell.xib */; };
+		1536442F20445309002DBC32 /* DelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1536442E20445309002DBC32 /* DelModel.swift */; };
 		1556C4302028B54800431A90 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1556C42F2028B54800431A90 /* MobileCoreServices.framework */; };
 		15C310E620289A1E00B33978 /* DateEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C310E520289A1E00B33978 /* DateEx.swift */; };
 		15C310EA2028AE6300B33978 /* ImageMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C310E82028AE6300B33978 /* ImageMsgCell.swift */; };
 		15C310EB2028AE6300B33978 /* ImageMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C310E92028AE6300B33978 /* ImageMsgCell.xib */; };
+		15CFE17A20458E6C001B1745 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CFE17920458E6C001B1745 /* ProfileVC.swift */; };
 		15D750F320332838001B5828 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D750F220332838001B5828 /* Photos.framework */; };
 		15D750F8203332DB001B5828 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15D750FA203332DB001B5828 /* InfoPlist.strings */; };
 		15E17CF82031CFCE00A4A492 /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E17CF72031CFCE00A4A492 /* NoteModel.swift */; };
 		15E17CFC2031D59F00A4A492 /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E17CFB2031D59F00A4A492 /* PhotoVC.swift */; };
+		15E8702D2046EA5B00ABFB84 /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E8702C2046EA5B00ABFB84 /* SetModel.swift */; };
 		A31E956020138985009A929C /* CtrlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31E955F20138985009A929C /* CtrlModel.swift */; };
 		A31E95622013A2A0009A929C /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A31E95612013A29F009A929C /* ToastSwiftFramework.framework */; };
 		A3269B682035C9E5000CC12D /* CollectionEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3269B672035C9E5000CC12D /* CollectionEX.swift */; };
@@ -59,13 +63,16 @@
 		1501B630202352A000872B8E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		1501B6322023544100872B8E /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		1501B6342023545500872B8E /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		1506DCE5204838AC008C4336 /* AccModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccModel.swift; sourceTree = "<group>"; };
 		150C1422203DABA90041D594 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		150C4F99201E216E00244664 /* TextMsgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMsgCell.swift; sourceTree = "<group>"; };
 		150C4F9A201E216E00244664 /* TextMsgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMsgCell.xib; sourceTree = "<group>"; };
+		1536442E20445309002DBC32 /* DelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelModel.swift; sourceTree = "<group>"; };
 		1556C42F2028B54800431A90 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		15C310E520289A1E00B33978 /* DateEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEx.swift; sourceTree = "<group>"; };
 		15C310E82028AE6300B33978 /* ImageMsgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMsgCell.swift; sourceTree = "<group>"; };
 		15C310E92028AE6300B33978 /* ImageMsgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageMsgCell.xib; sourceTree = "<group>"; };
+		15CFE17920458E6C001B1745 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		15D750F220332838001B5828 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		15D750F42033328E001B5828 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
 		15D750F52033328E001B5828 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -74,6 +81,7 @@
 		15E17CF72031CFCE00A4A492 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		15E17CF92031D58600A4A492 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		15E17CFB2031D59F00A4A492 /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
+		15E8702C2046EA5B00ABFB84 /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
 		A31E955F20138985009A929C /* CtrlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlModel.swift; sourceTree = "<group>"; };
 		A31E95612013A29F009A929C /* ToastSwiftFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ToastSwiftFramework.framework; path = Carthage/Build/iOS/ToastSwiftFramework.framework; sourceTree = "<group>"; };
 		A3269B672035C9E5000CC12D /* CollectionEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionEX.swift; sourceTree = "<group>"; };
@@ -181,6 +189,7 @@
 				A38432B5201C7F1400C7BF03 /* HomeVC.swift */,
 				1501B6322023544100872B8E /* ChatVC.swift */,
 				15E17CFB2031D59F00A4A492 /* PhotoVC.swift */,
+				15CFE17920458E6C001B1745 /* ProfileVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -305,6 +314,9 @@
 				A390ED3920261B25007E34EA /* GetModel.swift */,
 				A3559084202F2F3000168045 /* PubModel.swift */,
 				15E17CF72031CFCE00A4A492 /* NoteModel.swift */,
+				1536442E20445309002DBC32 /* DelModel.swift */,
+				15E8702C2046EA5B00ABFB84 /* SetModel.swift */,
+				1506DCE5204838AC008C4336 /* AccModel.swift */,
 			);
 			path = SocketModels;
 			sourceTree = "<group>";
@@ -456,12 +468,14 @@
 				A3934740201245820072D520 /* Configure.swift in Sources */,
 				1501B631202352A000872B8E /* DataModel.swift in Sources */,
 				A3559087202F3FB000168045 /* UIImageEX.swift in Sources */,
+				15CFE17A20458E6C001B1745 /* ProfileVC.swift in Sources */,
 				A3A36A9B2013326600348F7B /* LoginModel.swift in Sources */,
 				A3559085202F2F3000168045 /* PubModel.swift in Sources */,
 				A3269B682035C9E5000CC12D /* CollectionEX.swift in Sources */,
 				150C4F9B201E216E00244664 /* TextMsgCell.swift in Sources */,
 				A38432B6201C7F1400C7BF03 /* HomeVC.swift in Sources */,
 				A390ED38202613D4007E34EA /* LeaveModel.swift in Sources */,
+				1536442F20445309002DBC32 /* DelModel.swift in Sources */,
 				15C310E620289A1E00B33978 /* DateEx.swift in Sources */,
 				15C310EA2028AE6300B33978 /* ImageMsgCell.swift in Sources */,
 				A3DCCFA7201237D1002A6C5F /* LoginVC.swift in Sources */,
@@ -473,10 +487,12 @@
 				A38432AD201C75F900C7BF03 /* SubcribeModel.swift in Sources */,
 				A3DCCFA5201237D1002A6C5F /* AppDelegate.swift in Sources */,
 				1501B6332023544100872B8E /* ChatVC.swift in Sources */,
+				15E8702D2046EA5B00ABFB84 /* SetModel.swift in Sources */,
 				A3934743201256660072D520 /* StringEX.swift in Sources */,
 				A38432A9201C6D3200C7BF03 /* WebSocketProtocol.swift in Sources */,
 				A38432A5201C3BF300C7BF03 /* UserModel.swift in Sources */,
 				A393473D201243630072D520 /* WebSocketManager.swift in Sources */,
+				1506DCE6204838AC008C4336 /* AccModel.swift in Sources */,
 				A38432C2201CD2FD00C7BF03 /* ViewEX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

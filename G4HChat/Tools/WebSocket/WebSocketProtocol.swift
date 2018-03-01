@@ -20,6 +20,12 @@ protocol WebSocketProtocol {
     func subcribeData(_ data: DataVarModel)
 
     func pubData(_ topic: String, error: String)
+
+    func delRoomRes(topic: String, isSuccess: Bool)
+
+    func setRes(topic: String, isSuccess: Bool)
+
+    func accRes(isSuccess: Bool)
 }
 
 extension WebSocketProtocol {
@@ -32,4 +38,10 @@ extension WebSocketProtocol {
     func subcribeData(_ data: DataVarModel) {}
 
     func pubData(_ topic: String, error: String) {}
+
+    func delRoomRes(topic: String, isSuccess: Bool) {}
+
+    func setRes(topic: String, isSuccess: Bool) {}
+
+    func accRes(isSuccess: Bool) {}
 }

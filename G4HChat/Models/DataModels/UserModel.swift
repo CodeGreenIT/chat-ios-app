@@ -15,6 +15,8 @@ struct UserModel {
     var user: String
     var name: String = ""
     var photo: UIImage?
+    var password: String?
+    var account: String?
 
     init(expires: Date, token: String, user: String) {
         self.expires = expires

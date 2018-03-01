@@ -7,11 +7,15 @@
 //
 
 import Foundation
+enum SchemeEnum: String {
+    case basic = "basic"
+}
+
 struct LoginModel: Codable {
     var login: LoginContent
 
-    init(secret: String) {
-        self.login = LoginContent(secret: secret)
+    init(secret: String, scheme: SchemeEnum = .basic) {
+        self.login = LoginContent(secret: secret, scheme: scheme)
     }
 }
 
@@ -20,9 +24,9 @@ struct LoginContent: Codable {
     var scheme: String
     var secret: String
 
-    init(secret: String) {
+    init(secret: String, scheme: SchemeEnum = .basic) {
         self.id = UUID().uuidString
         self.secret = secret
-        self.scheme = "basic"
+        self.scheme = scheme.rawValue
     }
 }

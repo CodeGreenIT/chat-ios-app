@@ -21,6 +21,9 @@ class WebSocketManager {
         case Get
         case Pub
         case Note
+        case DelRoom
+        case Set
+        case Acc
     }
 
     static let shard = WebSocketManager()
@@ -113,6 +116,20 @@ class WebSocketManager {
     func sendNote(_ model: NoteModel) {
         self.send(model: model, type: .Note, id: nil)
     }
+
+    func delRoom(topic: String, what: WhatEnum) {
+        let delModel = DelModel(topic: topic, what: what)
+        self.send(model: delModel, type: .DelRoom,
+                  id: delModel.del.id)
+    }
+
+    func sendSetData(model: SetModel) {
+        self.send(model: model, type: .Set, id: model.set.id)
+    }
+
+    func sendAccData(model: AccModel) {
+        self.send(model: model, type: .Acc, id: model.acc.id)
+    }
 }
 
 // MARK: echo
@@ -145,7 +162,6 @@ extension WebSocketManager: WebSocketAdvancedDelegate {
             self.delegate?.subcribeData(dataModel.data)
         }
     }
-
 
     func websocketDidReceiveData(socket: WebSocket, data: Data, response: WebSocket.WSResponse) {
         print("Websocket receive data")
@@ -186,6 +202,15 @@ extension WebSocketManager {
         case .Pub:
             print("Get Pub Response")
             self.handlePub(res: res.ctrl)
+        case .DelRoom:
+            print("Get Del Response")
+            self.handelDelRoom(res: res.ctrl)
+        case .Set:
+            print("Get Set Response")
+            self.handleSet(res: res.ctrl)
+        case .Acc:
+            print("Get Acc Response")
+            self.handleAcc(res: res.ctrl)
         default: return
         }
     }
@@ -231,6 +256,7 @@ extension WebSocketManager {
             guard res.ctrl.code == 200 else {
                 let err = res.ctrl.text
                 self.delegate?.subcribeTopic(topic, error: err)
+                self.msgRecord.removeValue(forKey: res.ctrl.id)
                 return
             }
             self.delegate?.subcribeTopic(topic, ctrl: res.ctrl)
@@ -243,25 +269,24 @@ extension WebSocketManager {
                 if meta.meta.topic == "me" {
                     self.msgRecord.removeValue(forKey: meta.meta.id)
                 }
-                // Does subcribe Topic only 3 frame
             }
         }
     }
 
     private func handleLeave(res: CtrlContent) {
+        self.msgRecord.removeValue(forKey: res.id)
         guard res.code == 200 else {
             self.leaveTopic(res.topic!)
             return
         }
-        self.msgRecord.removeValue(forKey: res.id)
     }
 
     private func handlePub(res: CtrlContent) {
+        self.msgRecord.removeValue(forKey: res.id)
         guard res.code == 202 else {
             self.delegate?.pubData(res.topic!, error: res.text)
             return
         }
-        self.msgRecord.removeValue(forKey: res.id)
     }
 
     private func handleMetaDesc(_ topic: String, desc: DescModel) {
@@ -270,6 +295,26 @@ extension WebSocketManager {
         } else {
             self.delegate?.subcribeTopic(topic, desc: desc)
         }
+    }
+
+    private func handelDelRoom(res: CtrlContent) {
+        self.msgRecord.removeValue(forKey: res.id)
+        let isSuccess = (res.code == 200)
+        self.delegate?.delRoomRes(topic: res.topic!,
+                                  isSuccess: isSuccess)
+    }
+
+    private func handleSet(res: CtrlContent) {
+        self.msgRecord.removeValue(forKey: res.id)
+        let isSuccess = (res.code == 200)
+        self.delegate?.setRes(topic: res.topic!,
+                              isSuccess: isSuccess)
+    }
+
+    private func handleAcc(res: CtrlContent) {
+        self.msgRecord.removeValue(forKey: res.id)
+        let isSuccess = (res.code == 200)
+        self.delegate?.accRes(isSuccess: isSuccess)
     }
 }
 
@@ -286,6 +331,14 @@ extension WebSocketManager {
         self.currentUser?.name = desc.publicInfo.fn
         let imgDataStr = desc.publicInfo.photo!.imgData
         self.currentUser?.photo = imgDataStr.base64Image()!
+    }
+
+    func setUserName(name: String) {
+        self.currentUser?.name = name
+    }
+
+    func setAccount(account: String) {
+        self.currentUser?.account = account
     }
 
     private func setChatRoomStatus(res: PresModel) {

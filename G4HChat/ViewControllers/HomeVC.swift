@@ -45,8 +45,26 @@ extension HomeVC: WebSocketProtocol {
     func subcribeTopic(_ topic: String, metaInfo: [MetaInfo]) {
         guard topic == "me" else {return}
         self.view.hideToastActivity()
-        self.roomList = metaInfo
+        let filter = metaInfo.filter({$0.deleted == nil})
+        self.roomList = filter
         self.tableView.reloadData()
+    }
+
+    func delRoomRes(topic: String, isSuccess: Bool) {
+        self.view.hideToastActivity()
+        guard isSuccess else {
+            self.noticeAlert(title: "Error", message: "Delete chatroom failed", isPop: false)
+            return
+        }
+
+        if let idx = self.roomList.index(where: {$0.topic == topic}) {
+            self.roomList.remove(at: idx)
+            let path = IndexPath(row: idx, section: 0)
+            self.tableView.beginUpdates()
+            self.tableView.deleteRows(at: [path], with: .left)
+            self.tableView.endUpdates()
+        }
+
     }
 }
 
@@ -60,11 +78,11 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatRoom") as! ChatInfoCell
         let data = self.roomList[indexPath.row]
-        if let photo = data.publicInfo.photo {
+        if let photo = data.publicInfo?.photo {
             cell.avatar.image = photo.imgData.base64Image()
         } 
 
-        cell.titleLabel.text = data.publicInfo.fn
+        cell.titleLabel.text = data.publicInfo?.fn
         cell.messageLabel.text = data.privateStr
         let seq = data.seq ?? 0
         let read = data.read ?? 0
@@ -79,6 +97,21 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let data = self.roomList[indexPath.row]
         let vc = ChatVC.instance(data.topic!)
         self.navigationController?.show(vc, sender: self)
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            let data = self.roomList[indexPath.row]
+            let topic = data.topic!
+            self.socket.delRoom(topic: topic, what: .topic)
+            self.view.makeToastActivity(.center)
+        default: return
+        }
     }
 }
 

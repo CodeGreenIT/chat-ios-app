@@ -347,11 +347,11 @@ extension ChatVC {
         guard let member = self.members.first(where: {$0.user! == user}) else {
             return (#imageLiteral(resourceName: "avatar"), "Unknow")
         }
-        guard let photo = member.publicInfo.photo else {
-            return (#imageLiteral(resourceName: "avatar"), member.publicInfo.fn)
+        guard let photo = member.publicInfo?.photo else {
+            return (#imageLiteral(resourceName: "avatar"), (member.publicInfo?.fn)!)
         }
         return (photo.imgData.base64Image() ?? #imageLiteral(resourceName: "avatar"),
-                member.publicInfo.fn)
+                (member.publicInfo?.fn)!)
     }
 
     @objc private func tapScreen() {

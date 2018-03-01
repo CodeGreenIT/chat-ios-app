@@ -71,6 +71,8 @@ extension LoginVC: WebSocketProtocol {
             self.noticeAlert(title: "Error", message: error)
             return
         }
+        self.socket.setAccount(account: self.accountTextField.text!)
+
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "mainNavigation") as! UINavigationController
         if let tab = vc.viewControllers.first as? UITabBarController {
             tab.automaticallyAdjustsScrollViewInsets = false
