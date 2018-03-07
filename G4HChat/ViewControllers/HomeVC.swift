@@ -83,7 +83,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         } 
 
         cell.titleLabel.text = data.publicInfo?.fn
-        cell.messageLabel.text = data.privateStr
+        cell.messageLabel.text = data.privateArr?[0]
         let seq = data.seq ?? 0
         let read = data.read ?? 0
         cell.unReadNum = seq - read
@@ -123,6 +123,9 @@ extension HomeVC {
         let nib = ChatInfoCell.nib()
         self.tableView.register(nib,
                                 forCellReuseIdentifier: "ChatRoom")
+
+        let item = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addChatRoom))
+        self.navigationController?.navigationBar.topItem?.rightBarButtonItem = item
     }
 
     func setRoomStatus(src: String, status: String) {
@@ -132,5 +135,16 @@ extension HomeVC {
 
         let path = IndexPath(row: idx!, section: 0)
         self.tableView.reloadRows(at: [path], with: .fade)
+    }
+
+    func addToListIfNeed(topic: String, desc: DescModel) {
+        guard !self.roomList.contains(where: {$0.topic == topic}) else {return}
+
+//        var info = MetaInfo(acs: desc.de)
+    }
+
+    @objc private func addChatRoom() {
+        let vc = CreateRoomVC.instance()
+        self.navigationController?.show(vc, sender: self)
     }
 }

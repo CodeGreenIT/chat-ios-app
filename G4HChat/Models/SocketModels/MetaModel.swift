@@ -37,22 +37,27 @@ struct MetaContent: Codable {
 struct DescModel: Codable {
     var privateInfo: PrivateModel?
     var defacs: DefacsModel?
-    var publicInfo: PublicModel
+    var publicInfo: PublicModel?
 
     private enum CodingKeys: String, CodingKey {
-        case privateInfo = "private"
         case defacs
+        case privateInfo = "private"
         case publicInfo = "public"
     }
 
     public init(from decoder: Decoder) throws {
         let json = try decoder.container(keyedBy: CodingKeys.self)
-        self.publicInfo = try! json.decode(PublicModel.self, forKey: .publicInfo)
+        if let publiceModel = try? json.decode(PublicModel.self, forKey: .publicInfo) {
+            self.publicInfo = publiceModel
+        }
         self.defacs = try? json.decode(DefacsModel.self, forKey: .defacs)
         if let str = try? json.decode(String.self, forKey: .privateInfo) {
             self.privateInfo = PrivateModel(comment: nil, privateStr: str)
+        } else if let strArr = try? json.decode([String].self, forKey: .privateInfo) {
+            let str = strArr.joined(separator: ", ")
+            self.privateInfo = PrivateModel(comment: nil, privateStr: str)
         } else {
-            self.privateInfo = try! json.decode(PrivateModel.self, forKey: .privateInfo)
+            self.privateInfo = try? json.decode(PrivateModel.self, forKey: .privateInfo)
         }
     }
 
@@ -101,7 +106,7 @@ struct PhotoModel: Codable {
 
 struct MetaInfo: Codable {
     var acs: ACSModel
-    var privateStr: String?
+    var privateArr: [String]?
     var publicInfo: PublicModel?
     var read: Int?
     var recv: Int?
@@ -114,7 +119,7 @@ struct MetaInfo: Codable {
 
     private enum CodingKeys: String, CodingKey {
         case acs
-        case privateStr = "private"
+        case privateArr = "private"
         case publicInfo = "public"
         case read, recv, seq, topic, updated, online, user, deleted
     }
@@ -122,7 +127,11 @@ struct MetaInfo: Codable {
     public init(from decoder: Decoder) throws {
         let json = try decoder.container(keyedBy: CodingKeys.self)
         self.acs = try! json.decode(ACSModel.self, forKey: .acs)
-        self.privateStr = try json.decodeIfPresent(String.self, forKey: .privateStr)
+        if let arr = try? json.decode([String].self, forKey: .privateArr) {
+            self.privateArr = arr
+        } else if let str = try? json.decode(String.self, forKey: .privateArr) {
+            self.privateArr = [str]
+        }
         self.publicInfo = try? json.decode(PublicModel.self, forKey: .publicInfo)
         self.read = try? json.decode(Int.self, forKey: .read)
         self.recv = try? json.decode(Int.self, forKey: .recv)
@@ -137,6 +146,10 @@ struct MetaInfo: Codable {
         }
         self.online = try? json.decode(Bool.self, forKey: .online)
         self.user = try? json.decode(String.self, forKey: .user)
+    }
+
+    public init(acs: ACSModel) {
+        self.acs = acs
     }
 }
 

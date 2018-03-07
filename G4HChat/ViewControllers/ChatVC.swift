@@ -131,7 +131,7 @@ extension ChatVC: WebSocketProtocol {
 
     func subcribeTopic(_ topic: String, desc: DescModel) {
         guard topic == self.topic else {return}
-        self.title = desc.publicInfo.fn
+        self.title = desc.publicInfo?.fn
     }
 
     func subcribeTopic(_ topic: String, metaInfo: [MetaInfo]) {
@@ -381,8 +381,8 @@ extension ChatVC {
 
         if self.refresher.isRefreshing {
             self.refresher.endRefreshing()
-            let idx = self.received.count
-            let path = IndexPath(row: idx-1,
+            let idx = max(self.received.count-1, 1)
+            let path = IndexPath(row: idx,
                                  section: 0)
             self.chatTable.scrollToRow(at: path, at: .top,
                                        animated: false)

@@ -16,6 +16,10 @@
 		150C4F9C201E216E00244664 /* TextMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150C4F9A201E216E00244664 /* TextMsgCell.xib */; };
 		1536442F20445309002DBC32 /* DelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1536442E20445309002DBC32 /* DelModel.swift */; };
 		1556C4302028B54800431A90 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1556C42F2028B54800431A90 /* MobileCoreServices.framework */; };
+		1598584E204D5BDC00894118 /* CreateRoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1598584D204D5BDC00894118 /* CreateRoomVC.swift */; };
+		15985851204D62E200894118 /* CreateSingleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15985850204D62E200894118 /* CreateSingleVC.swift */; };
+		15985853204D62F300894118 /* CreateGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15985852204D62F300894118 /* CreateGroupVC.swift */; };
+		15985856204D631A00894118 /* SubByIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15985855204D631A00894118 /* SubByIDVC.swift */; };
 		15C310E620289A1E00B33978 /* DateEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C310E520289A1E00B33978 /* DateEx.swift */; };
 		15C310EA2028AE6300B33978 /* ImageMsgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C310E82028AE6300B33978 /* ImageMsgCell.swift */; };
 		15C310EB2028AE6300B33978 /* ImageMsgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15C310E92028AE6300B33978 /* ImageMsgCell.xib */; };
@@ -69,6 +73,10 @@
 		150C4F9A201E216E00244664 /* TextMsgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMsgCell.xib; sourceTree = "<group>"; };
 		1536442E20445309002DBC32 /* DelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelModel.swift; sourceTree = "<group>"; };
 		1556C42F2028B54800431A90 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		1598584D204D5BDC00894118 /* CreateRoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomVC.swift; sourceTree = "<group>"; };
+		15985850204D62E200894118 /* CreateSingleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSingleVC.swift; sourceTree = "<group>"; };
+		15985852204D62F300894118 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupVC.swift; sourceTree = "<group>"; };
+		15985855204D631A00894118 /* SubByIDVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubByIDVC.swift; sourceTree = "<group>"; };
 		15C310E520289A1E00B33978 /* DateEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEx.swift; sourceTree = "<group>"; };
 		15C310E82028AE6300B33978 /* ImageMsgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMsgCell.swift; sourceTree = "<group>"; };
 		15C310E92028AE6300B33978 /* ImageMsgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageMsgCell.xib; sourceTree = "<group>"; };
@@ -156,6 +164,17 @@
 			path = TextMsgCell;
 			sourceTree = "<group>";
 		};
+		1598584F204D62B700894118 /* CreateChatRoom */ = {
+			isa = PBXGroup;
+			children = (
+				1598584D204D5BDC00894118 /* CreateRoomVC.swift */,
+				15985850204D62E200894118 /* CreateSingleVC.swift */,
+				15985852204D62F300894118 /* CreateGroupVC.swift */,
+				15985855204D631A00894118 /* SubByIDVC.swift */,
+			);
+			path = CreateChatRoom;
+			sourceTree = "<group>";
+		};
 		15C310E72028AE2A00B33978 /* ImageMsgCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +204,7 @@
 		A38432B0201C7D5900C7BF03 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1598584F204D62B700894118 /* CreateChatRoom */,
 				A3DCCFA6201237D1002A6C5F /* LoginVC.swift */,
 				A38432B5201C7F1400C7BF03 /* HomeVC.swift */,
 				1501B6322023544100872B8E /* ChatVC.swift */,
@@ -459,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15985851204D62E200894118 /* CreateSingleVC.swift in Sources */,
 				A3A3E1D2201D7AA50010EAA5 /* ColorEX.swift in Sources */,
 				A38432BA201CB8DC00C7BF03 /* MetaModel.swift in Sources */,
 				A38432AB201C74C300C7BF03 /* ViewControllerEX.swift in Sources */,
@@ -478,10 +499,12 @@
 				1536442F20445309002DBC32 /* DelModel.swift in Sources */,
 				15C310E620289A1E00B33978 /* DateEx.swift in Sources */,
 				15C310EA2028AE6300B33978 /* ImageMsgCell.swift in Sources */,
+				15985856204D631A00894118 /* SubByIDVC.swift in Sources */,
 				A3DCCFA7201237D1002A6C5F /* LoginVC.swift in Sources */,
 				A3A36A9820132D4A00348F7B /* HiModel.swift in Sources */,
 				A3A3E1D4201D7E9D0010EAA5 /* PresModel.swift in Sources */,
 				15E17CF82031CFCE00A4A492 /* NoteModel.swift in Sources */,
+				1598584E204D5BDC00894118 /* CreateRoomVC.swift in Sources */,
 				A38432BF201CCC3000C7BF03 /* ChatInfoCell.swift in Sources */,
 				A390ED3A20261B25007E34EA /* GetModel.swift in Sources */,
 				A38432AD201C75F900C7BF03 /* SubcribeModel.swift in Sources */,
@@ -489,6 +512,7 @@
 				1501B6332023544100872B8E /* ChatVC.swift in Sources */,
 				15E8702D2046EA5B00ABFB84 /* SetModel.swift in Sources */,
 				A3934743201256660072D520 /* StringEX.swift in Sources */,
+				15985853204D62F300894118 /* CreateGroupVC.swift in Sources */,
 				A38432A9201C6D3200C7BF03 /* WebSocketProtocol.swift in Sources */,
 				A38432A5201C3BF300C7BF03 /* UserModel.swift in Sources */,
 				A393473D201243630072D520 /* WebSocketManager.swift in Sources */,

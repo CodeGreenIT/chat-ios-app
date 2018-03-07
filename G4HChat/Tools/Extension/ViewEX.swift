@@ -24,4 +24,8 @@ extension UIView {
         self.layer.borderColor = UIColor(hex: hex).cgColor
         self.layer.borderWidth = width
     }
+
+    func setBoardWidth(width: CGFloat) {
+        self.layer.borderWidth = width
+    }
 }

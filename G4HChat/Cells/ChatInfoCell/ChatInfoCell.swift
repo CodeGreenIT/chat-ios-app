@@ -21,6 +21,12 @@ class ChatInfoCell: UITableViewCell {
             self.avatar.setBoardColor(hex: hex, width: 5.0)
         }
     }
+    var showStatus: Bool = true {
+        didSet {
+            let width: CGFloat = (showStatus) ? 5.0: 0.0
+            self.avatar.setBoardWidth(width: width)
+        }
+    }
 
     private var _unReadNum: Int = 0
     var unReadNum: Int {
@@ -48,6 +54,10 @@ class ChatInfoCell: UITableViewCell {
         super.awakeFromNib()
         self.unReadView.roundCorner()
         self.avatar.roundCorner()
+    }
+
+    override func prepareForReuse() {
+        self.showStatus = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

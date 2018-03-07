@@ -22,4 +22,5 @@ extension Configure {
     static let incomingColor = "f1f0f0" // message incoming
     static let outgoingColor =  "4279ff"// messge outgoing
     static let lightGray = "f6f8fa" // messge bar bgcolor
+    static let myBlue = "4186DA"
 }

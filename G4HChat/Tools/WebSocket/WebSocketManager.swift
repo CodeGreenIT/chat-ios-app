@@ -24,6 +24,7 @@ class WebSocketManager {
         case DelRoom
         case Set
         case Acc
+        case Sub
     }
 
     static let shard = WebSocketManager()
@@ -63,15 +64,19 @@ class WebSocketManager {
     }
 
     func subcribeMe() {
-        let subModel = SubcribeModel(topic: "me", what: [.sub, .desc])
+        let subModel = SubcribeModel(topic: "me", get: [.sub, .desc])
         self.send(model: subModel, type: .SubTopic,
                   id: subModel.sub.id)
     }
 
     func subcribeRoom(topic: String, limit: Int=24) {
         let data = SubDataModel(limit: limit)
-        let sub = SubcribeModel(topic: topic, what: [.data, .sub, .desc], data: data)
+        let sub = SubcribeModel(topic: topic, get: [.data, .sub, .desc], data: data)
         self.send(model: sub, type: .SubTopic, id: sub.sub.id)
+    }
+
+    func sendSub(model: SubcribeModel) {
+        self.send(model: model, type: .Sub, id: model.sub.id)
     }
 
     func leaveTopic(_ topic: String) {
@@ -193,7 +198,7 @@ extension WebSocketManager {
             print("Get Login Response")
             self.msgRecord.removeValue(forKey: res.ctrl.id)
             self.handleLogin(res: res)
-        case .SubTopic, .Get:
+        case .SubTopic, .Get, .Sub:
             print("Get Subcribe Room Ctrl")
             self.handleSubcribeTopic(res: res, meta: nil)
         case .Leave:
@@ -220,7 +225,7 @@ extension WebSocketManager {
             return
         }
         switch type {
-        case .SubTopic:
+        case .SubTopic, .Sub:
             print("Get Subcribe Topic")
             self.handleSubcribeTopic(res: nil, meta: meta)
         default: return
@@ -266,7 +271,9 @@ extension WebSocketManager {
                 self.handleMetaDesc(topic, desc: meta.meta.desc!)
             } else if meta.meta.sub != nil {
                 self.delegate?.subcribeTopic(topic, metaInfo: meta.meta.sub!)
-                if meta.meta.topic == "me" {
+
+                let arr = ["me", "fnd"]
+                if arr.contains(meta.meta.topic) {
                     self.msgRecord.removeValue(forKey: meta.meta.id)
                 }
             }
@@ -328,9 +335,9 @@ extension WebSocketManager {
     }
 
     private func setUserInfo(desc: DescModel) {
-        self.currentUser?.name = desc.publicInfo.fn
-        let imgDataStr = desc.publicInfo.photo!.imgData
-        self.currentUser?.photo = imgDataStr.base64Image()!
+        self.currentUser?.name = (desc.publicInfo?.fn)!
+        let imgDataStr = desc.publicInfo?.photo!.imgData
+        self.currentUser?.photo = imgDataStr?.base64Image()!
     }
 
     func setUserName(name: String) {
