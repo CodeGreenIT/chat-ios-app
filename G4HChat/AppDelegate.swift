@@ -7,14 +7,15 @@
 //
 
 import UIKit
-
+import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        IQKeyboardManager.sharedManager().enable = false
+        IQKeyboardManager.sharedManager().shouldResignOnTouchOutside = true
         return true
     }
 
@@ -55,5 +56,13 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
+    }
+
+    class func getHomeVC() -> HomeVC? {
+        let topVC = self.topViewController()
+        guard let tvc = topVC?.navigationController?.viewControllers[0] as? UITabBarController else {return nil}
+        let arr = tvc.viewControllers!
+        guard let vc = arr[0] as? HomeVC else {return nil}
+        return vc
     }
 }

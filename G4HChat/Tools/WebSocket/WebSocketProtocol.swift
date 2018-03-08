@@ -16,7 +16,7 @@ protocol WebSocketProtocol {
     func subcribeTopic(_ topic: String, error: String)
     func subcribeTopic(_ topic: String, ctrl: CtrlContent)
     func subcribeTopic(_ topic: String, metaInfo: [MetaInfo])
-    func subcribeTopic(_ topic: String, desc: DescModel)
+    func subcribeTopic(_ topic: String, desc: MetaInfo)
     func subcribeData(_ data: DataVarModel)
 
     func pubData(_ topic: String, error: String)
@@ -34,7 +34,7 @@ extension WebSocketProtocol {
     func subcribeTopic(_ topic: String, ctrl: CtrlContent) {}
     func subcribeTopic(_ topic: String, error: String) {}
     func subcribeTopic(_ topic: String, metaInfo: [MetaInfo]) {}
-    func subcribeTopic(_ topic: String, desc: DescModel) {}
+    func subcribeTopic(_ topic: String, desc: MetaInfo) {}
     func subcribeData(_ data: DataVarModel) {}
 
     func pubData(_ topic: String, error: String) {}

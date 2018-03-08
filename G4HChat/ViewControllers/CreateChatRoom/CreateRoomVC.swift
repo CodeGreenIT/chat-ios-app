@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import IQKeyboardManagerSwift
 class CreateRoomVC: UIViewController {
 
     @IBOutlet private var indicatorLeft: NSLayoutConstraint!
@@ -22,6 +22,12 @@ class CreateRoomVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    deinit {
+        let socket = WebSocketManager.shard
+        socket.leaveTopic("fnd")
+        IQKeyboardManager.sharedManager().enableAutoToolbar = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,11 +56,14 @@ extension CreateRoomVC {
             let hex = (idx == page) ? Configure.myBlue: "000000"
             lab.textColor = UIColor(hex: hex)
         }
+        IQKeyboardManager.sharedManager().enable = false
+        IQKeyboardManager.sharedManager().enableAutoToolbar = false
         let vcs = self.childViewControllers
         if page == 0 {
             let vc = vcs.first(where: {$0 is CreateSingleVC}) as! CreateSingleVC
             vc.thePageShow()
         } else if page == 1 {
+            IQKeyboardManager.sharedManager().enable = true
             let vc = vcs.first(where: {$0 is CreateGroupVC}) as! CreateGroupVC
             vc.thePageShow()
         } else {

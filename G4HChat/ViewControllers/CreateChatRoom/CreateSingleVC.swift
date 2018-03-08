@@ -12,6 +12,7 @@ class CreateSingleVC: UIViewController {
 
     @IBOutlet private var tableView: UITableView!
 
+    private var isFirst = true
     private let socket = WebSocketManager.shard
     var people = [MetaInfo]()
 
@@ -23,7 +24,10 @@ class CreateSingleVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.socket.delegate = self
-        self.getRoomInfo()
+        if isFirst {
+            self.getRoomInfo()
+            self.isFirst = false
+        }
     }
 
     override func didReceiveMemoryWarning() {

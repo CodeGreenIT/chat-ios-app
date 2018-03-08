@@ -13,4 +13,8 @@ extension Date {
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
+
+    func iSOStr() -> String {
+        return self.toStr(format: "yyyy-MM-dd'T'HH:mm:ss")
+    }
 }

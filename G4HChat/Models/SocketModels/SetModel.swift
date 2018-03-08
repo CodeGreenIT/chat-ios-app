@@ -9,17 +9,17 @@
 import Foundation
 struct SetModel: Codable {
     var set: SetContent
-    public init(desc: DescModel, topic: String) {
+    public init(desc: MetaInfo, topic: String) {
         self.set = SetContent(desc: desc, topic: topic)
     }
 }
 
 struct SetContent: Codable {
-    var desc: DescModel
+    var desc: MetaInfo
     var id: String
     var topic: String
 
-    public init(desc: DescModel, topic: String) {
+    public init(desc: MetaInfo, topic: String) {
         self.id = UUID().uuidString
         self.desc = desc
         self.topic = topic

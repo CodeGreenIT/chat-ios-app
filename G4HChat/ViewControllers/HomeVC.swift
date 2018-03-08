@@ -22,7 +22,7 @@ class HomeVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.topItem?.title = "CHAT"
+        self.setNavigateionBar()
         self.socket.delegate = self
         if self.isFirst {
             self.socket.subcribeMe()
@@ -97,6 +97,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let data = self.roomList[indexPath.row]
         let vc = ChatVC.instance(data.topic!)
         self.navigationController?.show(vc, sender: self)
+        self.readRoom(path: indexPath)
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -123,24 +124,51 @@ extension HomeVC {
         let nib = ChatInfoCell.nib()
         self.tableView.register(nib,
                                 forCellReuseIdentifier: "ChatRoom")
+    }
 
+    private func setNavigateionBar() {
+        self.navigationController?.navigationBar.topItem?.title = "CHAT"
         let item = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addChatRoom))
         self.navigationController?.navigationBar.topItem?.rightBarButtonItem = item
+    }
+
+    private func readRoom(path: IndexPath) {
+        var data = self.roomList[path.row]
+        data.read = data.seq
+        self.roomList[path.row] = data
+        self.tableView.beginUpdates()
+        self.tableView.reloadRows(at: [path], with: .fade)
+        self.tableView.endUpdates()
     }
 
     func setRoomStatus(src: String, status: String) {
         let idx = self.roomList.index(where: {$0.topic == src})
         guard idx != nil else {return}
-        self.roomList[idx!].online = (status == "ok") ? true: false
+        self.roomList[idx!].online = (status == "on") ? true: false
 
         let path = IndexPath(row: idx!, section: 0)
         self.tableView.reloadRows(at: [path], with: .fade)
     }
 
-    func addToListIfNeed(topic: String, desc: DescModel) {
+    func addToListIfNeed(topic: String, desc: MetaInfo) {
         guard !self.roomList.contains(where: {$0.topic == topic}) else {return}
 
-//        var info = MetaInfo(acs: desc.de)
+        self.roomList.append(desc)
+        self.tableView.beginUpdates()
+        let path = IndexPath(row: self.roomList.count-1, section: 0)
+        self.tableView.insertRows(at: [path], with: .fade)
+        self.tableView.endUpdates()
+    }
+
+    func setCharRoomUnRead(res: PresModel) {
+        guard let idx = self.roomList.index(where: {$0.topic == res.pres.src}) else {return}
+        var data = self.roomList[idx]
+        data.seq = res.pres.seq
+        self.roomList[idx] = data
+        self.tableView.beginUpdates()
+        let path = IndexPath(row: idx, section: 0)
+        self.tableView.reloadRows(at: [path], with: .fade)
+        self.tableView.endUpdates()
     }
 
     @objc private func addChatRoom() {

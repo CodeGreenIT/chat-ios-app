@@ -24,6 +24,7 @@ class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.socket.delegate = self
+        self.navigationController?.navigationBar.topItem?.rightBarButtonItem = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,7 +38,9 @@ extension ProfileVC: WebSocketProtocol {
         self.view.makeToastActivity(.center)
         let publicModel = PublicModel(fn: self.name.text!,
                                       image: self.avatar.image!)
-        let desc = DescModel(privateInfo: nil, defacs: nil, publicInfo: publicModel)
+//        let desc = DescModel(privateInfo: nil, defacs: nil, publicInfo: publicModel)
+        var desc = MetaInfo()
+        desc.publicInfo = publicModel
         let set = SetModel(desc: desc, topic: "me")
         self.socket.sendSetData(model: set)
     }

@@ -21,6 +21,7 @@ class ChatVC: UIViewController {
     }
 
     private var topic: String = ""
+    private var subModel: SubcribeModel?
     private let socket = WebSocketManager.shard
     private var isFirst = true
     private var members = [MetaInfo]()
@@ -41,10 +42,12 @@ class ChatVC: UIViewController {
     @IBOutlet var photoView: UIView!
     
 
-    class func instance(_ topic: String) -> ChatVC {
+    class func instance(_ topic: String,
+                        subModel: SubcribeModel?=nil) -> ChatVC {
         let board = UIStoryboard(name: "Chat", bundle: nil)
         let vc = board.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         vc.topic = topic
+        vc.subModel = subModel
         vc.members.removeAll()
         vc.received.removeAll()
         return vc
@@ -59,12 +62,10 @@ class ChatVC: UIViewController {
         super.viewWillAppear(animated)
         self.socket.delegate = self
         if self.isFirst {
-            self.view.makeToastActivity(.center)
-            self.socket.subcribeRoom(topic: self.topic, limit: 24)
+            self.subcribe()
             self.isFirst = false
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: .UIKeyboardWillHide, object: nil)
+        self.addNotification()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,12 +116,26 @@ class ChatVC: UIViewController {
 }
 
 extension ChatVC: WebSocketProtocol {
+    private func subcribe() {
+        self.view.makeToastActivity(.center)
+        if self.topic != "" {
+            self.socket.subcribeRoom(topic: self.topic, limit: 24)
+        } else if let sub = self.subModel {
+            self.socket.sendSub(model: sub)
+        } else {
+            assert(false, "No topic, No subModel")
+        }
+    }
+
     func subcribeTopic(_ topic: String, error: String) {
         guard topic == self.topic else {return}
         self.noticeAlert(title: "Error", message: error)
     }
 
     func subcribeTopic(_ topic: String, ctrl: CtrlContent) {
+        if let sub = self.subModel, sub.sub.id == ctrl.id {
+            self.topic = ctrl.topic!
+        }
         guard topic == self.topic else {return}
         guard let what = ctrl.params?.what else {return}
         if what == "data" {
@@ -129,9 +144,10 @@ extension ChatVC: WebSocketProtocol {
         }
     }
 
-    func subcribeTopic(_ topic: String, desc: DescModel) {
+    func subcribeTopic(_ topic: String, desc: MetaInfo) {
         guard topic == self.topic else {return}
         self.title = desc.publicInfo?.fn
+        self.socket.addChatRoomIfNeed(topic: topic, desc: desc)
     }
 
     func subcribeTopic(_ topic: String, metaInfo: [MetaInfo]) {
@@ -343,6 +359,11 @@ extension ChatVC {
 
 // MARK: Funcs
 extension ChatVC {
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(noti:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(noti:)), name: .UIKeyboardWillHide, object: nil)
+    }
+
     private func getUserInfo(user: String) -> (UIImage, String) {
         guard let member = self.members.first(where: {$0.user! == user}) else {
             return (#imageLiteral(resourceName: "avatar"), "Unknow")
@@ -381,7 +402,7 @@ extension ChatVC {
 
         if self.refresher.isRefreshing {
             self.refresher.endRefreshing()
-            let idx = max(self.received.count-1, 1)
+            let idx = max(self.received.count-1, 0)
             let path = IndexPath(row: idx,
                                  section: 0)
             self.chatTable.scrollToRow(at: path, at: .top,

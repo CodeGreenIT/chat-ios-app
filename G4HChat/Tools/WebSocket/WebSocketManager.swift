@@ -234,7 +234,14 @@ extension WebSocketManager {
 
     private func handlePres(res: PresModel) {
         if res.pres.topic == "me" {
-            self.setChatRoomStatus(res: res)
+            switch res.pres.what {
+            case .on, .off:
+                self.setChatRoomStatus(res: res)
+            case .msg:
+                self.setChatRoomUnRead(res: res)
+            default: return
+            }
+
         }
     }
 
@@ -269,8 +276,9 @@ extension WebSocketManager {
             let topic = meta.meta.topic
             if meta.meta.desc != nil {
                 self.handleMetaDesc(topic, desc: meta.meta.desc!)
-            } else if meta.meta.sub != nil {
-                self.delegate?.subcribeTopic(topic, metaInfo: meta.meta.sub!)
+            } else {
+                let sub = meta.meta.sub ?? []
+                self.delegate?.subcribeTopic(topic, metaInfo: sub)
 
                 let arr = ["me", "fnd"]
                 if arr.contains(meta.meta.topic) {
@@ -296,7 +304,7 @@ extension WebSocketManager {
         }
     }
 
-    private func handleMetaDesc(_ topic: String, desc: DescModel) {
+    private func handleMetaDesc(_ topic: String, desc: MetaInfo) {
         if topic == "me" {
             self.setUserInfo(desc: desc)
         } else {
@@ -334,7 +342,7 @@ extension WebSocketManager {
         self.send(model: hiModel, type: .Hi, id: hiModel.hi.id)
     }
 
-    private func setUserInfo(desc: DescModel) {
+    private func setUserInfo(desc: MetaInfo) {
         self.currentUser?.name = (desc.publicInfo?.fn)!
         let imgDataStr = desc.publicInfo?.photo!.imgData
         self.currentUser?.photo = imgDataStr?.base64Image()!
@@ -349,13 +357,19 @@ extension WebSocketManager {
     }
 
     private func setChatRoomStatus(res: PresModel) {
-        let topVC = UIApplication.topViewController()
-        if let homeVC = topVC as? HomeVC {
-            homeVC.setRoomStatus(src: res.pres.src, status: res.pres.what)
-        } else {
-            let arr = topVC?.navigationController?.viewControllers
-            let homeVC = arr?.first {$0.isKind(of: HomeVC.self)} as? HomeVC
-            homeVC?.setRoomStatus(src: res.pres.src, status: res.pres.what)
-        }
+        let vc = UIApplication.getHomeVC()
+        vc?.setRoomStatus(src: res.pres.src, status: res.pres.what.rawValue)
+    }
+
+    private func setChatRoomUnRead(res: PresModel) {
+        let vc = UIApplication.getHomeVC()
+        vc?.setCharRoomUnRead(res: res)
+    }
+
+    func addChatRoomIfNeed(topic: String, desc: MetaInfo) {
+        let vc = UIApplication.getHomeVC()
+        var _desc = desc
+        _desc.topic = topic
+        vc?.addToListIfNeed(topic: topic, desc: _desc)
     }
 }
