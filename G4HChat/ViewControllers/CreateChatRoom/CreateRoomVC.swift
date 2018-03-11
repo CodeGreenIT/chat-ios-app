@@ -12,6 +12,7 @@ class CreateRoomVC: UIViewController {
 
     @IBOutlet private var indicatorLeft: NSLayoutConstraint!
     @IBOutlet var titleLabels: [UILabel]!
+    @IBOutlet var scrollView: UIScrollView!
 
 
     class func instance() -> CreateRoomVC {
@@ -22,6 +23,7 @@ class CreateRoomVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewInit()
     }
 
     deinit {
@@ -56,6 +58,7 @@ extension CreateRoomVC {
             let hex = (idx == page) ? Configure.myBlue: "000000"
             lab.textColor = UIColor(hex: hex)
         }
+
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
         let vcs = self.childViewControllers
@@ -70,5 +73,21 @@ extension CreateRoomVC {
             let vc = vcs.first(where: {$0 is SubByIDVC}) as! SubByIDVC
             vc.thePageShow()
         }
+    }
+
+    private func viewInit() {
+        for i in 10...12 {
+            let vi = self.view.viewWithTag(i)
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapTopBtn(ges:)))
+            vi?.addGestureRecognizer(tap)
+        }
+    }
+
+    @objc private func tapTopBtn(ges: UITapGestureRecognizer) {
+        let point = ges.location(in: self.view)
+        let width = self.view.bounds.size.width
+        let page = Int(point.x / (width / 3))
+        let offset = CGPoint(x: width * CGFloat(page), y: 0)
+        self.scrollView.setContentOffset(offset, animated: true)
     }
 }

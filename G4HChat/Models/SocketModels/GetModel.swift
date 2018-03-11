@@ -18,6 +18,7 @@ enum WhatEnum: String {
     case off = "off"
     case on = "on"
     case acs = "acs"
+    case gone = "gone"
 }
 
 struct GetModel: Codable {

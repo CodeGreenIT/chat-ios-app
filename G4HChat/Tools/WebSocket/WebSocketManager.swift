@@ -55,6 +55,7 @@ class WebSocketManager {
             self.msgRecord[id!] = type
         }
         self.ws.write(data: data)
+
     }
 
     func login(account: String, password: String) {
@@ -239,6 +240,8 @@ extension WebSocketManager {
                 self.setChatRoomStatus(res: res)
             case .msg:
                 self.setChatRoomUnRead(res: res)
+            case .gone:
+                self.removeChatRoom(res: res)
             default: return
             }
 
@@ -364,6 +367,11 @@ extension WebSocketManager {
     private func setChatRoomUnRead(res: PresModel) {
         let vc = UIApplication.getHomeVC()
         vc?.setCharRoomUnRead(res: res)
+    }
+
+    private func removeChatRoom(res: PresModel) {
+        let vc = UIApplication.getHomeVC()
+        vc?.removeChatRoom(res: res)
     }
 
     func addChatRoomIfNeed(topic: String, desc: MetaInfo) {

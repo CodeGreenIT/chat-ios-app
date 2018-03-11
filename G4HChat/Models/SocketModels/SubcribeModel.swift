@@ -22,11 +22,26 @@ struct SubcribeContent: Codable {
     var get: SubGetModel
     var set: MetaInfo?
 
+    private enum CodingKeys: String, CodingKey {
+        case id, topic, get, set
+    }
+
     init(topic: String, get: [WhatEnum], data: SubDataModel?=nil, set: MetaInfo?=nil) {
         self.id = UUID().uuidString
         self.topic = topic
         self.get = SubGetModel(what: get, data: data)
         self.set = set
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.topic, forKey: .topic)
+        try container.encode(self.get, forKey: .get)
+        if let desc = self.set {
+            let dic = ["desc": desc]
+            try container.encode(dic, forKey: .set)
+        }
     }
 }
 

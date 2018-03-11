@@ -171,6 +171,15 @@ extension HomeVC {
         self.tableView.endUpdates()
     }
 
+    func removeChatRoom(res: PresModel) {
+        guard let idx = self.roomList.index(where: {$0.topic == res.pres.src}) else {return}
+        self.roomList.remove(at: idx)
+        self.tableView.beginUpdates()
+        let path = IndexPath(row: idx, section: 0)
+        self.tableView.deleteRows(at: [path], with: .left)
+        self.tableView.endUpdates()
+    }
+
     @objc private func addChatRoom() {
         let vc = CreateRoomVC.instance()
         self.navigationController?.show(vc, sender: self)
